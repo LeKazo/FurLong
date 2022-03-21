@@ -3,6 +3,7 @@ from pygame.locals import *
 import sys
 
 from Ground import *
+from player import Player
 
 
 # Begin Pygame
@@ -21,6 +22,7 @@ pygame.display.set_caption("FurLong")
 background = pygame.image.load("Images/Background.png")
 
 ground = Ground(900, 120, -20, 320, "Images/Ground.png")
+player = Player(200, 200)
 
 
 while True:
@@ -36,9 +38,12 @@ while True:
         if event.type == KEYDOWN:
             pass
 
+    player.move()
+
 
     display.blit(background, (0, 0))
     ground.render(display)
+    player.render(display)
 
     pygame.display.update()
     CLOCK.tick(FPS)
