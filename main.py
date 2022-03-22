@@ -24,6 +24,9 @@ background = pygame.image.load("Images/Background.png")
 ground = Ground(900, 120, -20, 320, "Images/Ground.png")
 player = Player(200, 200)
 
+GroundGroup = pygame.sprite.Group()
+GroundGroup.add(ground)
+
 
 while True:
 
@@ -39,6 +42,7 @@ while True:
             pass
 
     player.move()
+    player.collision(GroundGroup)
 
 
     display.blit(background, (0, 0))
