@@ -39,7 +39,8 @@ while True:
             pass
 
         if event.type == KEYDOWN:
-            pass
+            if event.key == K_SPACE:
+             player.jump()
 
     player.move()
     player.collision(GroundGroup)

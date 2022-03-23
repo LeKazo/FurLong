@@ -6,17 +6,24 @@ vec = pygame.math.Vector2
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
+
+        self.image = pygame.image.load("Images/RunIdleRight.png")
+        self.rect = self.image.get_rect()
+        self.rect.topleft = (x, y)
+
+        #player info
         self.pos = vec(x, y)
         self.acc = vec(0, 0)
         self.vel = vec(0, 0)
 
+        #player constants
         self.ACC = 0.4
         self.FRIC = -0.1
 
-        self.image = pygame.image.load("Images/RunIdle.png")
-        self.rect = self.image.get_rect()
-
-        self.rect.topleft = self.pos
+        #player movement
+        self.jumping = False
+        self.running = False
+        
 
 
     def move(self):
@@ -48,5 +55,9 @@ class Player(pygame.sprite.Sprite):
                    self.rect.y = lowest.rect.top - self.rect.height
                    self.vel.y = 0 
 
+    def jump(self):
+        self.vel.y = -15
+
     def render(self, display):
         display.blit(self.image, self.pos)
+
