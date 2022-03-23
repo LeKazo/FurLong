@@ -1,2 +1,8 @@
 https://yal.cc/r/19/upscale/ 
+<<<<<<< HEAD
 to downscale the pixel art, its 35x49
+=======
+to downscale the pixel art, its 35x49
+
+ballz, also i meant the viewport sorry
+>>>>>>> 7b539e1d736a67dc54351ea4528e9831a6d7d012
