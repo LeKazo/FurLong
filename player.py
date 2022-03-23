@@ -13,7 +13,7 @@ class Player(pygame.sprite.Sprite):
         self.ACC = 0.4
         self.FRIC = -0.1
 
-        self.image = pygame.image.load("Images/QueenBeeR.png")
+        self.image = pygame.image.load("Images/RunIdle.png")
         self.rect = self.image.get_rect()
 
         self.rect.topleft = self.pos
