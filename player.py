@@ -43,7 +43,6 @@ class Player(pygame.sprite.Sprite):
         #player movement
         self.jumping = False
         self.running = False
-        self.direction = "RIGHT"
         self.move_frame = 0
         
 
@@ -51,6 +50,11 @@ class Player(pygame.sprite.Sprite):
     def move(self):
 
         self.acc = vec(0, 0.5)
+
+        if abs(self.vel.x) > 0.3:
+            self.running = True
+        else:
+            self.running = False
 
         keys = pygame.key.get_pressed()
 
@@ -70,8 +74,8 @@ class Player(pygame.sprite.Sprite):
         if self.move_frame > 6:
             self.move_frame = 0
             return
-            
-        if self.jump == False:
+
+        if self.jumping == False and self.running == True:
             if self.vel.x > 0:
                 self.image = animation_right[self.move_frame]
                 self.direction = "RIGHT"
@@ -79,6 +83,14 @@ class Player(pygame.sprite.Sprite):
                 self.image =  animation_left[self.move_frame]
                 self.direction = "LEFT"
             self.move_frame += 1
+
+        if self.running == False and self.move_frame != 0:
+            self.move_frame = 0
+            if self.direction == "RIGHT":
+                self.image =  animation_right[self.move_frame]
+            elif self.direction == "LEFT":
+                self.image =  animation_left[self.move_frame]
+
 
     def update(self, group):
         self.walking()
@@ -96,9 +108,12 @@ class Player(pygame.sprite.Sprite):
                    self.pos.y = lowest.rect.top - self.rect.height 
                    self.rect.y = lowest.rect.top - self.rect.height
                    self.vel.y = 0 
+                   self.jumping = False
 
     def jump(self):
-        self.vel.y = -15
+        if self.jumping == False:
+            self.jumping = True
+            self.vel.y = -15
 
     def render(self, display):
         display.blit(self.image, self.pos)
