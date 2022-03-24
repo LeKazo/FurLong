@@ -42,8 +42,7 @@ while True:
             if event.key == K_SPACE:
              player.jump()
 
-    player.move()
-    player.collision(GroundGroup)
+    player.update(GroundGroup)
 
 
     display.blit(background, (0, 0))

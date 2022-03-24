@@ -1,7 +1,27 @@
+from tokenize import group
+from matplotlib import animation
 import pygame
 from pygame.locals import *
 
 vec = pygame.math.Vector2
+
+animation_right = [pygame.image.load("Images/RunIdleRight.png"),   
+                   pygame.image.load("Images/run1right.png"),
+                   pygame.image.load("Images/run2right.png"),
+                   pygame.image.load("Images/run3right.png"),
+                   pygame.image.load("Images/run4right.png"),
+                   pygame.image.load("Images/run5right.png"),
+                   pygame.image.load("Images/RunIdleRight.png")]
+
+
+animation_left = [pygame.image.load("Images/RunIdleLeft.png"),
+                  pygame.image.load("Images/run1left.png"),
+                  pygame.image.load("Images/run2left.png"),
+                  pygame.image.load("Images/run3left.png"),
+                  pygame.image.load("Images/run4left.png"),
+                  pygame.image.load("Images/run5left.png"),
+                  pygame.image.load("Images/RunIdleLeft.png")]
+
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
@@ -23,6 +43,8 @@ class Player(pygame.sprite.Sprite):
         #player movement
         self.jumping = False
         self.running = False
+        self.direction = "RIGHT"
+        self.move_frame = 0
         
 
 
@@ -42,6 +64,25 @@ class Player(pygame.sprite.Sprite):
         self.pos += self.vel + 0.5 * self.acc
 
         self.rect.topleft = self.pos
+
+
+    def walking(self):
+        if self.move_frame > 6:
+            self.move_frame = 0
+            return
+        if self.jump == False:
+            if self.vel.x > 0:
+                self.image = animation_right[self.move_frame]
+                self.direction = "RIGHT"
+            elif self.vel.x < 0:
+                self.image =  animation_left[self.move_frame]
+                self.direction = "LEFT"
+            self.move += 1
+
+    def update(self, group):
+        self.walking()
+        self.move()
+        self.collision(group)
 
     def collision(self, group): 
         hits = pygame.sprite.spritecollide(self, group, False)
