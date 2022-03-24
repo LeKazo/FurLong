@@ -70,6 +70,7 @@ class Player(pygame.sprite.Sprite):
         if self.move_frame > 6:
             self.move_frame = 0
             return
+            
         if self.jump == False:
             if self.vel.x > 0:
                 self.image = animation_right[self.move_frame]
@@ -77,7 +78,7 @@ class Player(pygame.sprite.Sprite):
             elif self.vel.x < 0:
                 self.image =  animation_left[self.move_frame]
                 self.direction = "LEFT"
-            self.move += 1
+            self.move_frame += 1
 
     def update(self, group):
         self.walking()
