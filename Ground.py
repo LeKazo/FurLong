@@ -20,6 +20,5 @@ class Ground(pygame.sprite.Sprite):
 
         
 
-        
 
         
