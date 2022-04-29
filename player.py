@@ -35,7 +35,7 @@ attack_animation_left = [pygame.image.load("Images/Player_Sprite_L.png"),
                           pygame.image.load("Images/Player_Attack4_L.png"),
                           pygame.image.load("Images/Player_Attack5_L.png"),
                           pygame.image.load("Images/Player_Sprite_L.png")]
-
+#attack animations are a WIP since other friend/collaborator has not made the attack sprites yet
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
