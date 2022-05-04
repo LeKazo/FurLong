@@ -4,43 +4,11 @@ from pygame.locals import *
 vec = pygame.math.Vector2
 
 
-animation_right = [pygame.image.load("Images/Player_Sprite_R.png"),
-                   pygame.image.load("Images/Player_Sprite2_R.png"),
-                   pygame.image.load("Images/Player_Sprite3_R.png"),
-                   pygame.image.load("Images/Player_Sprite4_R.png"),
-                   pygame.image.load("Images/Player_Sprite5_R.png"),
-                   pygame.image.load("Images/Player_Sprite6_R.png"),
-                   pygame.image.load("Images/Player_Sprite_R.png")]
-
-animation_left = [pygame.image.load("Images/Player_Sprite_L.png"),
-                  pygame.image.load("Images/Player_Sprite2_L.png"),
-                  pygame.image.load("Images/Player_Sprite3_L.png"),
-                  pygame.image.load("Images/Player_Sprite4_L.png"),
-                  pygame.image.load("Images/Player_Sprite5_L.png"),
-                  pygame.image.load("Images/Player_Sprite6_L.png"),
-                  pygame.image.load("Images/Player_Sprite_L.png")]
-
-attack_animation_right = [pygame.image.load("Images/Player_Sprite_R.png"),
-                          pygame.image.load("Images/Player_Attack1_R.png"),
-                          pygame.image.load("Images/Player_Attack2_R.png"),
-                          pygame.image.load("Images/Player_Attack3_R.png"),
-                          pygame.image.load("Images/Player_Attack4_R.png"),
-                          pygame.image.load("Images/Player_Attack5_R.png"),
-                          pygame.image.load("Images/Player_Sprite_R.png")]
-
-attack_animation_left = [pygame.image.load("Images/Player_Sprite_L.png"),
-                          pygame.image.load("Images/Player_Attack1_L.png"),
-                          pygame.image.load("Images/Player_Attack2_L.png"),
-                          pygame.image.load("Images/Player_Attack3_L.png"),
-                          pygame.image.load("Images/Player_Attack4_L.png"),
-                          pygame.image.load("Images/Player_Attack5_L.png"),
-                          pygame.image.load("Images/Player_Sprite_L.png")]
-
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-        self.image = pygame.image.load("Images/Player_Sprite_R.png")
+        self.image = pygame.image.load("Images/RunIdleRight.png")
         self.rect = pygame.Rect(x, y, 35, 50)
 
         # Player Info
@@ -84,6 +52,11 @@ class Player(pygame.sprite.Sprite):
         self.vel += self.acc
         self.pos += self.vel + 0.5 * self.acc
 
+        if self.pos.x > 800:
+            self.pos.x = 0
+        elif self.pos.x < -30:
+            self.pos.x = 800
+
         self.rect.topleft = self.pos
         self.rect.x += 32
 
@@ -95,19 +68,19 @@ class Player(pygame.sprite.Sprite):
 
         if self.jumping == False and self.running == True:
             if self.vel.x >= 0:
-                self.image = animation_right[self.move_frame]
+                self.image = self.animation_right[self.move_frame]
                 self.direction = "RIGHT"
             elif self.vel.x < 0:
-                self.image = animation_left[self.move_frame]
+                self.image = self.animation_left[self.move_frame]
                 self.direction = "LEFT"
             self.move_frame += 1
 
         if self.running == False and self.move_frame != 0:
             self.move_frame = 0
             if self.direction == "RIGHT":
-                self.image = animation_right[self.move_frame]
+                self.image = self.animation_right[self.move_frame]
             elif self.direction == "LEFT":
-                self.image = animation_left[self.move_frame]
+                self.image = self.animation_left[self.move_frame]
 
     def attack(self):
         if self.attacking == True:
@@ -123,9 +96,9 @@ class Player(pygame.sprite.Sprite):
                 return
 
             if self.direction == "RIGHT":
-                self.image = attack_animation_right[self.attack_frame]
+                self.image = self.attack_animation_right[self.attack_frame]
             elif self.direction == "LEFT":
-                self.image = attack_animation_left[self.attack_frame]
+                self.image = self.attack_animation_left[self.attack_frame]
 
             self.attack_counter += 1
             if self.attack_counter >= 2:
@@ -166,3 +139,36 @@ class Player(pygame.sprite.Sprite):
         pygame.draw.rect(display, (255, 0, 0), self.rect)
         pygame.draw.rect(display, (0, 255, 0), self.attack_range)
         display.blit(self.image, self.pos)
+
+    def load_animations(self):
+        self.animation_right = [pygame.image.load("Images/RunIdleRight.png").convert_alpha(),
+                   pygame.image.load("Images/run1right.png").convert_alpha(),
+                   pygame.image.load("Images/run2right.png").convert_alpha(),
+                   pygame.image.load("Images/run3right.png").convert_alpha(),
+                   pygame.image.load("Images/run4right.png").convert_alpha(),
+                   pygame.image.load("Images/run5right.png").convert_alpha(),
+                   pygame.image.load("Images/RunIdleRight.png").convert_alpha()]
+
+        self.animation_left = [pygame.image.load("Images/RunIdleLeft.png").convert_alpha(),
+                          pygame.image.load("Images/run1left.png").convert_alpha(),
+                          pygame.image.load("Images/run2left.png").convert_alpha(),
+                          pygame.image.load("Images/run3left.png").convert_alpha(),
+                          pygame.image.load("Images/run4left.png").convert_alpha(),
+                          pygame.image.load("Images/run5left.png").convert_alpha(),
+                          pygame.image.load("Images/RunIdleLeft.png").convert_alpha()]
+
+        self.attack_animation_right = [pygame.image.load("Images/RunIdleRight.png").convert_alpha(),
+                                  pygame.image.load("Images/run1right.png").convert_alpha(),
+                                  pygame.image.load("Images/run2right.png").convert_alpha(),
+                                  pygame.image.load("Images/run3right.png").convert_alpha(),
+                                  pygame.image.load("Images/run4right.png").convert_alpha(),
+                                  pygame.image.load("Images/run5right.png").convert_alpha(),
+                                  pygame.image.load("Images/RunIdleRight.png").convert_alpha()]
+
+        self.attack_animation_left = [pygame.image.load("Images/RunIdleLeft.png").convert_alpha(),
+                                  pygame.image.load("Images/run1left.png").convert_alpha(),
+                                  pygame.image.load("Images/run2left.png").convert_alpha(),
+                                  pygame.image.load("Images/run3left.png").convert_alpha(),
+                                  pygame.image.load("Images/run4left.png").convert_alpha(),
+                                  pygame.image.load("Images/run5left.png").convert_alpha(),
+                                  pygame.image.load("Images/RunIdleLeft.png").convert_alpha()]
