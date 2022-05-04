@@ -3,8 +3,6 @@ from pygame.locals import *
 
 vec = pygame.math.Vector2
 
-
-
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
