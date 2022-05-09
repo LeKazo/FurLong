@@ -1,5 +1,7 @@
 import pygame
 import random
+import numpy
+from Item import Item
 
 vec = pygame.math.Vector2
 
@@ -52,16 +54,34 @@ class Enemy(pygame.sprite.Sprite):
                     self.rect.y = lowest.rect.top - self.rect.height 
                     self.vel.y = 0
 
-    def player_collision(self, player):
+    def player_collision(self, player, itemGroup):
         if self.rect.colliderect(player.rect):
-            pass
+            # Hit the Player 
+            player.player_hit(1)
         elif self.rect.colliderect(player.attack_range):
-            pass
+            # Hit by the Player
+            self.kill()
+
+            random_chance = numpy.random.uniform(1, 100)
+
+            if random_chance >= 1 and random_chance <= 10:
+                item = Item(self.pos.x, self.pos.y, 0, "Images/coin.png")
+                itemGroup.add(item)
+            elif random_chance >= 11 and random_chance <= 20:
+                item = Item(self.pos.x, self.pos.y, 1, "Images/heart1.png")
+                itemGroup.add(item)
+
+            
+    def update(self, groundGroup, player, itemGroup):
+        self.move()
+        self.collision(groundGroup)
+        self.player_collision(player, itemGroup)
                     
 
     def render(self, display):
         display.blit(self.image, self.pos)
-        pygame.draw.rect(display, (0, 0, 255), self.rect)
+        #pygame.draw.rect(display, (0, 0, 255), self.rect)
 
 
+        
         
